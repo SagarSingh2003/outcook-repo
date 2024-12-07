@@ -1,0 +1,18 @@
+.body-paragraph > p{
+    padding : 10px;
+    line-height: 1.5rem;
+    color: #374151;
+}
+
+.body-paragraph{
+    margin-left: 100px;
+    margin-right: 100px;
+}
+
+.overflow{
+    max-height: 93.5vh;
+    text-overflow: clip;
+    overflow-y: scroll;
+    border-left : 1px solid #e7efeb;
+}
+

@@ -1,0 +1,128 @@
+body, html {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+}
+
+.login-page {
+  display: flex;
+  height: 100vh;
+}
+
+.left-panel {
+  flex: 1;
+  background-color: #1a1a1a;
+  color: #fff;
+  padding: 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.left-panel .brand {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.left-panel .testimonial {
+  font-size: 16px;
+}
+
+.right-panel {
+  flex: 1;
+  padding: 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background-color: #fff;
+}
+
+.form-container {
+  max-width: 400px;
+  margin: auto;
+}
+
+.form-container h2 {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.form-container p {
+  font-size: 14px;
+  margin-bottom: 20px;
+  color: #555;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.error {
+  color: red;
+  font-size: 12px;
+}
+
+.submit-btn, .github-btn {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: none;
+  border-radius: 4px;
+  background-color: #000;
+  color: #fff;
+  cursor: pointer;
+}
+
+.submit-btn:hover, .github-btn:hover {
+  background-color: #333;
+}
+
+.divider {
+  text-align: center;
+  margin: 15px 0;
+}
+
+.divider span {
+  font-size: 14px;
+  color: #888;
+}
+
+.terms {
+  font-size: 12px;
+  color: #777;
+  text-align: center;
+}
+
+.terms a {
+  color: #000;
+  text-decoration: underline;
+}
+
+.padding-2{
+  padding-bottom: 25px;
+
+}
+
+.text-sm{
+   font-size : 13px ;
+   font-size: small;
+}
+
+
+@media (max-width : 863px) {
+    .left-panel{
+      display: none;
+    }
+}

@@ -1,0 +1,1 @@
+export const filter_map = ["Unread" , "Read" , "Favorites"];

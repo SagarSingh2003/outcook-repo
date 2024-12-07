@@ -1,0 +1,1 @@
+export const s3Base = "https://outcook.s3.ap-south-1.amazonaws.com"
