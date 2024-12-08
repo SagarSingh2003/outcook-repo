@@ -1,11 +1,13 @@
 import {Kafka , Partitioners} from "kafkajs";
+import dotenv from "dotenv"
 
+dotenv.config()
 
 class KafkaStore {
     constructor(){
         this.kafka = new Kafka({
             clientId: 'outcook-client',
-            brokers: ['localhost:9092'],
+            brokers: [`${process.env.broker}`],
         })
           
         
