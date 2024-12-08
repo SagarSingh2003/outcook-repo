@@ -27,7 +27,7 @@ export const sendMessage = async (data : any) => {
                 "email" : data.to
             },
             "subject" : data.subject,
-            "short_description" : data?.message?.slice(0 , Math.floor(data.message.length / 4)).toString(),
+            "short_description" : data?.message?.length > 15 ? data?.message?.slice(0 , Math.floor(data.message.length / 4)).toString() : data?.message.toString(),
             "body" : data?.message,
             "date" : new Date(Date.now()).toString(),
             "attachments" : data.attachments,

@@ -12,6 +12,8 @@ import redisClient from "./config/redisConfig.js";
 import { WebSocketServer } from "ws";
 import url from "url";
 import { KeepKafkaAlive } from "./utils/kafka/kafkaKeepAlive.js";
+import fs from "fs";
+import https from "https";
 
 dotenv.config();
 
@@ -29,12 +31,32 @@ const PORT = process.env.PORT || 3000;
 
 const app = express();
 
+const certPath = '/etc/letsencrypt/live/mailapi.airedify.in/fullchain.pem';
+const keyPath = '/etc/letsencrypt/live/mailapi.airedify.in/privkey.pem';
+
+const serverOptions = {
+  cert: fs.readFileSync(certPath),
+  key: fs.readFileSync(keyPath),
+};
+
+const server = https.createServer(serverOptions, app);
+
+runConsumer()
+
+const wss = new WebSocketServer({noServer : true})
+
+export let dbconn;
+
+(async () => {
+  dbconn = await DatabaseService.connect(db_uri.toString());
+})()
+
 app.use(cookieParser());
 
 app.use(
   cors({
     credentials: true,
-    origin: ["http://localhost:5173", "https://mailapi.airedify.in"],
+    origin: ["http://localhost:5173", "https://outcook-repo.vercel.app"],
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowedHeaders: [
       "Content-Type",
@@ -59,20 +81,6 @@ app.use("/user", userRoute);
 app.use("/aws", awsRoute);
 
 
-runConsumer()
-
-const wss = new WebSocketServer({noServer : true})
-
-export let dbconn;
-
-(async () => {
-  dbconn = await DatabaseService.connect(db_uri.toString());
-  
-})()
-
-const server = app.listen(PORT, () => {
-  console.log("app listening on port", PORT);
-});
 
 
 server.on('upgrade' , (req , socket , head) => {
@@ -89,16 +97,16 @@ server.on('upgrade' , (req , socket , head) => {
 
 wss.on('connection' , (ws , req) => {
 
-  
-  ws.on('error' , onSocketPostError );
+
+    ws.on('error' , onSocketPostError );
 
     const pathname = url.parse(req.url).pathname;
 
     const email = pathname.split('/')[1];
-    
+
       const redisClientInstance = new redisClient()
 
-      console.log('got here *************', email);
+        console.log('got here *************', email);
       redisClientInstance.redis.subscribe(email , (err, count) => {
         if (err) {
           console.error("Failed to subscribe: %s", err.message);
@@ -108,22 +116,28 @@ wss.on('connection' , (ws , req) => {
           );
         }
       });
-      
-      redisClientInstance.redis.on("message" , (channel, message) => {  
+
+      redisClientInstance.redis.on("message" , (channel, message) => {
         console.log("got message")
         console.log("message" , message);
-        console.log(typeof message); 
+        console.log(typeof message);
         ws.send(JSON.stringify(message));
       })
 
-  
+
 
   ws.on('close' , () => {
-    //close the redis client connection for this websocket
       redisClientInstance.redis.disconnect()
       console.log('Connection Closed!')
   })
 
  })
 
+
+
+server.listen(PORT, () => {
+  console.log("app listening on port", PORT);
+});
+
 export default app;
+                          
