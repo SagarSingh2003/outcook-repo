@@ -3,7 +3,7 @@ import { atom, selector } from "recoil";
 export const bodyMetaData = atom({
   key: "MetaDataBody",
   default: {
-    id: "",
+    _id: "",
     from: {
       email: "",
       name: "",
@@ -17,7 +17,7 @@ export const bodyMetaData = atom({
 export const messageBody = atom({
     key: "MessageBody",
     default: {
-        id : "",
+        _id : "",
         body: ""          
     }
 }) 
@@ -30,4 +30,5 @@ export const getMessageBody = selector({
 
     return { ...messageMetaData, ...messagebody };
   },
+
 });

@@ -1,4 +1,5 @@
 import UserData from "../model/userdata.js";
+import Message from "../model/MessageSchema.js";
 import ApiResponse from "../utils/ApiReponses.js";
 import dbService from "../utils/dbService.js";
 import sendMessageToKafkaQueue from "../utils/kafka/kafkaProduceMessageService.js";
@@ -84,7 +85,26 @@ const chartDataController = {
           return new ApiResponse(res).internalServerError(err.toString())
       }
 
-  }
+  },
+  markAsDone : async (req , res) => {
+
+    const id = req.params.id;
+
+    try{
+        
+        const isMessageUpdated = await dbService.findOneAndUpdate(Message , {_id : id} , {isRead : true})  
+
+        if(isMessageUpdated){
+            return new ApiResponse(res).successful()
+        }
+    }catch(err){
+        
+        console.log(err);
+
+        return new ApiResponse(res).internalServerError(err.toString())
+    }
+
+}
 };
 
 

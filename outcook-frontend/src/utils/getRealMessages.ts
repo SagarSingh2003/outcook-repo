@@ -10,6 +10,8 @@ export const get_Messages_List_From_Backend = async () => {
 
             if(res.status === 200){
                 return res?.data?.data?.recievedMessages
+            }else if(typeof(res) === typeof("string")){
+                return "redirect"
             }else{
                 return null
             }
@@ -33,7 +35,7 @@ export const get_Sent_Messages_List_From_Backend = async () => {
         if(res.status === 200){
             return res?.data?.data?.sentMessages
         }else{
-            return res
+            return null
         }
 
     }catch(err : any){

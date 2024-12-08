@@ -1,8 +1,11 @@
+import { backButtonPressed } from "@/atoms/backButton";
+import { currSessionReadMsg, readMsgList } from "@/atoms/currSessionReadMsg";
 import { IsMessageBodyOpen } from "@/atoms/isMessageBodyOpen";
 import { bodyMetaData } from "@/atoms/messageBody";
 import formatDate from "@/utils/formatDate";
 import { IMSG_DATA } from "@/utils/getMockMessages";
-import { useSetRecoilState } from "recoil";
+import { markAsRead } from "@/utils/markAsRead";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 
 const MessagePreviewCards = ({
   messageItem,
@@ -23,33 +26,48 @@ const MessagePreviewCards = ({
   //     "Vestibulum sit amet ipsum aliquet, lacinia nulla malesuada, ullamcorper massa",
   // };
 
+  const [currSessionReadMsgList , setCurrSessionReadMsg] = useRecoilState(currSessionReadMsg);
+  const notiStyle = { width : "10px" , height: "10px" , backgroundColor: "#f6ca17" , borderRadius : "100%" , display : "flex" , justifyContent: "center" , alignItems : "center"}
   console.log(isFavorite);
   const setBodyMetaData = useSetRecoilState(bodyMetaData);
-
+  const back_Button_Pressed = useRecoilValue(backButtonPressed);
   const setOpenMsgBody = useSetRecoilState(IsMessageBodyOpen);
+  const read_Msg_List = useRecoilValue(readMsgList);
 
-  const openMessageBody = (id: string , data : IMSG_DATA) => {
+  const openMessageBody = (_id: string , data : any) => {
     console.log("saving meta data" , data)
 
     setBodyMetaData(data)
-    setOpenMsgBody({ open: true, id: id });
+    setOpenMsgBody({ open: true, _id: _id });
   };
+
+  const setBackButtonPressed = useSetRecoilState(backButtonPressed);
 
 console.log(messageItem , "message item");
 
   return (
     <section
+
       className="message-preview-card"
+
+      style={back_Button_Pressed ? {display: "block!important" } : {}}
+
       onClick={() => {
+        // @ts-expect-error 
+        setCurrSessionReadMsg((state) => state + messageItem?._id + "+")
+        // @ts-expect-error 
+        markAsRead(messageItem?._id)
+        setBackButtonPressed(false)
         openMessageBody(messageItem?.id , messageItem);
       }}
+
     >
       <div className="message-preview-section-first ">
         <span className="logo">
           {messageItem?.from?.name[0]?.toUpperCase()}
         </span>
       </div>
-      <div className="message-preview-section-second ">
+      <div className="message-preview-section-second">
         <section className="flex-row-justify-start-gap">
           <section className="flex-row pad-5">
             <span className="color-fade font-bold color-black-twist">From: &nbsp;</span>
@@ -67,10 +85,16 @@ console.log(messageItem , "message item");
         <section className="color-fade pad-5" style={{paddingTop : '8px'}}>
           <p>{messageItem?.short_description.length > 30 ? messageItem?.short_description.substring(0 , 30)+"..." : messageItem.short_description}</p>
         </section>
-        <section className="pad-5">
+        <section className="pad-5" style={{display : "flex" , flexDirection: "row" , alignItems : "center" }}>
           <span className="color-fade">
             {formatDate(messageItem?.date).toString()} &nbsp;
           </span>
+          {/* @ts-expect-error */}
+          <div        style={ !read_Msg_List.includes(messageItem?._id) ? notiStyle :   {display : "none"}}>
+                <div style={{ width : "5px" , height: "5px" , backgroundColor: "#e1b038" , borderRadius : "100%"}}>
+
+                </div>
+          </div>
         </section>
       </div>
     </section>

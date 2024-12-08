@@ -58,8 +58,8 @@ const LoginPage = () => {
         >
           {() => (
             <Form className="form-container">
-              <h2>Create an account</h2>
-              <p>Enter your email below to create your account</p>
+              <h2>Already have an account ? Sign in </h2>
+              <p>Enter your email below to signin to your account</p>
 
               <div className="form-group">
                 <label htmlFor="email">Email</label>
@@ -101,9 +101,8 @@ const LoginPage = () => {
               </button>
 
               <p className="terms">
-                By clicking continue, you agree to our{" "}
-                <a href="/terms">Terms of Service</a> and{" "}
-                <a href="/privacy">Privacy Policy</a>.
+                Don't have an Account ? {" "}
+                <a href="/signup" style={{color: "#4398f0"}}>signup</a>
               </p>
             </Form>
           )}

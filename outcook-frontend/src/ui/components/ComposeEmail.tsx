@@ -1,5 +1,6 @@
 import { composeModal } from "@/atoms/composeModal";
 import { s3Base } from "@/constants/s3UrlBase";
+import { useToast } from "@/hooks/useToast";
 import { get_Signed_Url } from "@/utils/getSignedUrl";
 import { sendMessage } from "@/utils/sendMessage";
 import axios from "axios";
@@ -69,7 +70,7 @@ const MessageModal = () => {
         console.log(url);
         // const bodyBlob = dataURIToBlob(e?.target?.files)
   }
-
+  const {showToast} = useToast()
   const fileInputRef = useRef()
 
 //   @ts-expect-error 
@@ -91,10 +92,27 @@ const MessageModal = () => {
 
       if(attachments[0].length !== 0){
          const res =    await sendMessage({...formData , attachments : attachments})
-         console.log(res);
+         if(res){
+            setShowComposeModal(false)
+         }else{
+          showToast({
+            title : "EMAIL COULD NOT BE SENT",
+            desc: "please try again"
+          })
+         }
+ 
       }else{
         const res = await sendMessage(formData)
         console.log(res);
+        
+        if(res){
+          setShowComposeModal(false)
+        }else{
+            showToast({
+              title : "EMAIL COULD NOT BE SENT",
+              desc: "please try again"
+            })
+        }
       }
     }
   };
@@ -105,6 +123,24 @@ const MessageModal = () => {
         <form onSubmit={handleSubmit}>
           <div className="modal-header">
             <h2>New Message</h2>
+
+          <input
+                type="file"
+                // @ts-ignore 
+                ref={fileInputRef}
+                onChange={handleAttachFile}
+                className="hidden"
+                style={{display : "none"}}
+                multiple
+              />
+            <button type="button" className="attach-button" onClick={() => {
+                // @ts-expect-error
+                  fileInputRef.current?.click()
+            }}> 
+              <span className="attach-icon">&#128206;</span> Attach
+            </button>
+            <button type="submit" className="send-button">Send</button>
+
             <button onClick={() => {
                 setShowComposeModal(false)
             }}
@@ -145,6 +181,7 @@ const MessageModal = () => {
               {errors.message && <span className="error-text" style={{padding : "10px 0 10px 0"}} >{errors.message}</span>}
             </div>
           </div>
+          
           <div className="modal-attachments">
                 {attachments[0]?.length!= 0 && attachments?.map((attachment : string , index : number) => {
                     return (
@@ -170,25 +207,7 @@ const MessageModal = () => {
                             }}>&times;</span>    
                         </p>
                     )
-                })}
-          </div>
-          <div className="modal-footer">
-          <input
-                type="file"
-                // @ts-ignore 
-                ref={fileInputRef}
-                onChange={handleAttachFile}
-                className="hidden"
-                style={{display : "none"}}
-                multiple
-              />
-            <button type="button" className="attach-button" onClick={() => {
-                // @ts-expect-error
-                  fileInputRef.current?.click()
-            }}> 
-              <span className="attach-icon">&#128206;</span> Attach
-            </button>
-            <button type="submit" className="send-button">Send</button>
+                }).reverse()}
           </div>
         </form>
       </div>

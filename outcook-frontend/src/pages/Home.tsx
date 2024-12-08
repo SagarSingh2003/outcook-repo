@@ -1,5 +1,5 @@
-import { getMessageList } from "@/atoms/realEmailData";
-import Header from "@/ui/components/Header";
+import { getMessageList, sentMessageList } from "@/atoms/realEmailData";
+import HeaderReal from "@/ui/components/HeaderReal";
 import MessagePreviewCards from "@/ui/components/messagePreviewCard";
 import MsgBodyRealEmail from "@/ui/components/MsgBodyRealEmail";
 import { IMSG_DATA } from "@/utils/getMockMessages";
@@ -12,13 +12,15 @@ import { useToast } from "@/hooks/useToast";
 import { messagesAndNotificationMessages } from "@/atoms/realEmailData";
 import ComposeEmail  from "@/ui/components/ComposeEmail";
 import { composeModal } from "@/atoms/composeModal";
+import { showEmailType } from "@/atoms/showEmails";
 
 export default function Home(){
 
     let messageList = useRecoilValue(getMessageList);
+    const sent_Message_List = useRecoilValue(sentMessageList);
     let [allMessages , setAllMessages] = useRecoilState(messagesAndNotificationMessages)
     let [noti_fication , setNotification] = useRecoilState(notification);
-
+    const emailType = useRecoilValue(showEmailType);
     const [showComposeModal , _] = useRecoilState<any>(composeModal)
 
 
@@ -32,8 +34,9 @@ export default function Home(){
 
             const email = localStorage.getItem("email")
 
-            if(!email){
-                navigate("/signin")
+            console.log(messageList , "this is supposed to be redirect");
+            if(!email || messageList === "redirect"){
+                navigate("/signin");
             }
 
             const ws = ConnectToWebSocketServer(email as string)
@@ -63,21 +66,36 @@ export default function Home(){
 
     return(
         <main>
-            <Header />
+            <HeaderReal />
             <section className="flex-row">
-                <div style={{width: "25%" }} className="overflow">
+                {
+
+            emailType === "sent" ?
+                <section  style={{ minWidth: "462px" }} className=" message_preview overflow">
+                
+                    {sentMessageList && sent_Message_List?.map((messagePreview : IMSG_DATA) => {
+                        return messagePreview? <MessagePreviewCards messageItem={messagePreview} isFavorite={true}/> : "No messages Present right now"
+                        
+                    }).reverse()}
+
+                </section>
+                
+                    : 
+                <div  style={{ minWidth: "462px" }} className=" message_preview overflow">
+                    
                     {allMessages && allMessages?.map((messagePreview : IMSG_DATA) => {
                         return messagePreview? <MessagePreviewCards messageItem={messagePreview} isFavorite={true}/> : "No messages Present right now"
                         
                     }).reverse()}
 
                 </div>
-                <div style={{width: "75%"}} className="overflow">
+                }
+                <div  style={{width: "75%"}} className="message_body overflow">
                      <MsgBodyRealEmail /> 
                      
                 </div>
             </section>
-            <section style={{position : "absolute", top: "0px"}}>
+            <section>
                     {showComposeModal ? <ComposeEmail /> : null}
             </section>
         </main>

@@ -83,3 +83,49 @@
 .color-black-twist{
     color: rgb(17, 24, 39);
 }
+
+@media (max-width: 1072px){
+    
+    .message_preview{
+        display: none;
+    }
+
+    .message_body{
+        width: 100% !important;
+        min-height : 93vh !important;
+    }
+
+    .close_message_body{
+        display : block !important;
+    }
+
+    .mobile-view-none{
+        display: none !important;
+    }
+
+    .message-preview-right{
+        display: block!important;
+    }
+}
+
+@media (min-width: 1072px){
+    .back-btn{
+        display: none !important;
+    }
+
+    .message-preview-right{
+        display: none!important;
+    }
+}
+
+@media (max-width: 575px){
+    .message_header{
+        scale: 0.85;
+        margin: 0px !important;
+    }
+
+    .message_header{
+        gap: 5px !important;
+        font-size: 14px;
+    }
+}

@@ -29,7 +29,7 @@ export default function Home(){
     useEffect(() => {
         
         if(isMsgBodyOpen.open){
-            fetchMessageBody(isMsgBodyOpen?.id);
+            fetchMessageBody(isMsgBodyOpen?._id);
         }
 
     } , [isMsgBodyOpen]);

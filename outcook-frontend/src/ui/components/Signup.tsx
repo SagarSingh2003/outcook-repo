@@ -121,9 +121,8 @@ const SignupPage = () => {
               </button>
 
               <p className="terms">
-                By clicking continue, you agree to our{" "}
-                <a href="/terms">Terms of Service</a> and{" "}
-                <a href="/privacy">Privacy Policy</a>.
+                Already have an Account ? {" "}
+                <a href="/signin" style={{color: "#4398f0"}}>signin</a>
               </p>
             </Form>
           )}

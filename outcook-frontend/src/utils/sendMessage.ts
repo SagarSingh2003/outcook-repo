@@ -21,6 +21,8 @@ import axios from "@/configs/axios.config"
 //   }
 
 export const sendMessage = async (data : any) => {
+
+    console.log(data.attachments)
     try{
         const res = await axios.post("/user/send_message" , {
             "to" : {
@@ -38,7 +40,7 @@ export const sendMessage = async (data : any) => {
         if(res.status === 200){
             return res.data
         }else{
-            return res
+            return null
         }
     }catch(err : any){
         return err.toString()

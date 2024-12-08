@@ -3,20 +3,20 @@
     align-items: center;
     justify-content: center;
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background-color: rgba(0, 0, 0, 0.5);
+    bottom: 20px;
+    right: 20px;
     z-index: 1000;
   }
   
   .modal-container {
-    width: 500px;
+    width: 1000px;
     background-color: #fff;
     border-radius: 8px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
+    overflow: scroll;
+    border: 1px solid #e5e5e5;
+    width: 450px;
+    height: 600px;
   }
   
   .modal-header {
@@ -57,7 +57,7 @@
   
   .textarea-field {
     min-width: 95%;
-    height: 100px;
+    min-height: 300px;
     padding: 10px;
     border: 1px solid #e5e5e5;
     border-radius: 4px;
@@ -120,7 +120,9 @@
     
 }
 .modal-attachments{
-    max-height: 300px;
+    display: flex;
+    flex-direction: column;
+    overflow-x: scroll;
     overflow-y: scroll;
 }
 
@@ -140,4 +142,27 @@
   background-color: white;
   border-radius: 5px;
 
+}
+
+
+
+@media (max-width: 480px){
+  
+  .modal-container{
+    max-width: 300px;
+  }
+
+  /* .modal-header{
+    scale : 0.85;
+  } */
+  .modal-header>h2{
+    font-size : 14px;
+    display: none;
+  }
+
+  .modal-overlay{
+    top: 0;
+    left: 0;
+    right: 0;
+  }
 }

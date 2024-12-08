@@ -22,8 +22,8 @@ export default function Footer(){
                 <span className="pagination-btn pagination-btn-color">{currentpage}</span>
                 <span className="pagination-btn "
                 onClick={() => {
-                    console.log(messageList[messageList?.length - 1].id , maxmessages);
-                    if( Number(messageList[messageList?.length - 1].id) < maxmessages ){  
+                    console.log(messageList[messageList?.length - 1]._id , maxmessages);
+                    if( Number(messageList[messageList?.length - 1]._id) < maxmessages ){  
                         startTransition(() => {
                             setCurrentPage(currentpage + 1)
                         })
