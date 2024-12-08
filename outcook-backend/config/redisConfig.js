@@ -4,7 +4,7 @@ import Redis from "ioredis"
 class redisClient{
     constructor(){
         this.redis = new Redis({
-            host: '127.0.0.1',
+            host: '3.108.55.67',
             port: 6379,
         });  
     }

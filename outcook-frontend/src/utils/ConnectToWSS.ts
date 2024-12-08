@@ -1,7 +1,9 @@
+import {domain} from "../constants/domain"
+
 export default function ConnectToWebSocketServer(email : string){
 
     console.log(email , "email");
-    const ws = new WebSocket(`ws://localhost:3000/${email}`);
+    const ws = new WebSocket(`ws://${domain}/${email}`);
 
     ws.addEventListener('open', () => {
         console.log('Websocket connection established');
