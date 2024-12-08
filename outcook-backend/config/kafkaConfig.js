@@ -7,6 +7,12 @@ class KafkaStore {
     constructor(){
         this.kafka = new Kafka({
             clientId: 'outcook-client',
+            ssl: true,  
+            sasl: {
+              mechanism: process.env.AWS_MSK_IAM, 
+              accessKeyId: process.env.accessKeyId,
+              secretAccessKey: process.env.secretAccessKey
+            },
             brokers: [`${process.env.broker}`],
         })
           
