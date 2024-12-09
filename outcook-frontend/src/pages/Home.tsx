@@ -43,6 +43,7 @@ export default function Home(){
 
             ws.addEventListener('message' , (msg : any) => {
                 const message = JSON.parse(JSON.parse(msg?.data))
+                setAllMessages(state => state.concat([noti_fication] as any))
                 setNotification((state : any) => state.concat([message]))
                 showToast({title: "🔔" + message.subject , desc : (message)?.short_description})
                 console.log(message , "message recieved");
@@ -56,7 +57,7 @@ export default function Home(){
 
     useEffect(() => {
 
-        setAllMessages(state => state.concat(noti_fication))
+
         
     } , [noti_fication])
 
