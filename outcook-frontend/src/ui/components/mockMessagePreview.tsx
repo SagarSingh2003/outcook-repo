@@ -1,11 +1,9 @@
 import { backButtonPressed } from "@/atoms/backButton";
-import { currSessionReadMsg } from "@/atoms/currSessionReadMsg";
 import { IsMessageBodyOpen } from "@/atoms/isMessageBodyOpen";
 import { bodyMetaData } from "@/atoms/messageBody";
 import formatDate from "@/utils/formatDate";
 import { IMSG_DATA } from "@/utils/getMockMessages";
-import { markAsRead } from "@/utils/markAsRead";
-import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 
 const MockMessagePreviewCards = ({
   messageItem,
@@ -26,7 +24,6 @@ const MockMessagePreviewCards = ({
   //     "Vestibulum sit amet ipsum aliquet, lacinia nulla malesuada, ullamcorper massa",
   // };
 
-  const [_ , setCurrSessionReadMsg] = useRecoilState(currSessionReadMsg);
   console.log(isFavorite);
   const setBodyMetaData = useSetRecoilState(bodyMetaData);
   const back_Button_Pressed = useRecoilValue(backButtonPressed);
@@ -51,10 +48,11 @@ console.log(messageItem , "message item");
       style={back_Button_Pressed ? {display: "block!important" } : {}}
 
       onClick={() => {
-        // @ts-expect-error 
-        setCurrSessionReadMsg((state) => state + messageItem?._id + "+")
-        // @ts-expect-error 
-        markAsRead(messageItem?._id)
+        const readArrStr = localStorage.getItem("readArrStr")
+
+        localStorage.setItem("readArrStr" , readArrStr + "+" + messageItem?.id)
+        // setCurrSessionReadMsg((state) => state + messageItem?._id + "+")
+        // markAsRead(messageItem?._id)
         setBackButtonPressed(false)
         openMessageBody(messageItem?.id , messageItem);
       }}
@@ -87,24 +85,25 @@ console.log(messageItem , "message item");
           <span className="color-fade">
             {formatDate(messageItem?.date).toString()} &nbsp;
           </span>
+          {  (localStorage.getItem("favoriteArrStr") || "" ).includes(messageItem?.id) ?  <StarComponent /> : null}
         </section>
       </div>
     </section>
   );
 };
 
-// const StarComponent = () => (
-//   <svg
-//     xmlns="http://www.w3.org/2000/svg"
-//     width={20}
-//     height={20}
-//     viewBox="0 0 20 20"
-//   >
-//     <path
-//       fill="currentColor"
-//       d="M9.104 2.9a1 1 0 0 1 1.794 0l1.93 3.91l4.317.628a1 1 0 0 1 .554 1.706l-3.124 3.044l.738 4.3a1 1 0 0 1-1.451 1.054l-3.86-2.03l-3.862 2.03a1 1 0 0 1-1.45-1.055l.737-4.299l-3.124-3.044a1 1 0 0 1 .554-1.706l4.317-.627z"
-//     ></path>
-//   </svg>
-// );
+const StarComponent = () => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width={15}
+    height={15}
+    viewBox="0 0 20 20"
+  >
+    <path
+      fill="#db2777"
+      d="M9.104 2.9a1 1 0 0 1 1.794 0l1.93 3.91l4.317.628a1 1 0 0 1 .554 1.706l-3.124 3.044l.738 4.3a1 1 0 0 1-1.451 1.054l-3.86-2.03l-3.862 2.03a1 1 0 0 1-1.45-1.055l.737-4.299l-3.124-3.044a1 1 0 0 1 .554-1.706l4.317-.627z"
+    ></path>
+  </svg>
+);
 
 export default MockMessagePreviewCards;

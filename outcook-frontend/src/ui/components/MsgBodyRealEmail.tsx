@@ -6,7 +6,6 @@ import {useRecoilState, useRecoilValue } from "recoil";
 import MessagePreviewCards from "./messagePreviewCard";
 import { showEmailType } from "@/atoms/showEmails";
 import {  messagesAndNotificationMessages, sentMessageList } from "@/atoms/realEmailData";
-import { IMSG_DATA } from "@/utils/getMockMessages";
 
 const MsgBody = () => {
 
@@ -105,7 +104,7 @@ const MsgBody = () => {
                 emailType === "sent" ?
                     <section  style={{ minWidth: "462px" , display: "block!important"}} className=" message_preview overflow message-preview-right">
                     
-                        {sentMessageList && sent_Message_List?.map((messagePreview : IMSG_DATA) => {
+                        {sentMessageList && sent_Message_List?.map((messagePreview : any) => {
                             return messagePreview? <MessagePreviewCards messageItem={messagePreview} isFavorite={true}/> : "No messages Present right now"
                             
                         }).reverse()}
@@ -115,7 +114,7 @@ const MsgBody = () => {
                         : 
                     <div  style={{ minWidth: "462px" , display : "block" }} className=" message_preview message-preview-right overflow">
                         
-                        {allMessages && allMessages?.map((messagePreview : IMSG_DATA) => {
+                        {allMessages && allMessages?.map((messagePreview : any) => {
                             return messagePreview? <MessagePreviewCards messageItem={messagePreview} isFavorite={true}/> : "No messages Present right now"
                             
                         }).reverse()}

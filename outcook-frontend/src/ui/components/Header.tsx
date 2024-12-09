@@ -1,13 +1,11 @@
-import { composeModal } from "@/atoms/composeModal";
-import { currentFilterCode } from "@/atoms/filter";
-import { filter_map } from "@/constants/filter_code";
+import { mockFilter } from "@/atoms/mockFilter";;
 import { useRecoilState } from "recoil";
 
 export default function Header() {
-  const [filter, setFilter] = useRecoilState(currentFilterCode);
-  const [_ , setShowComposeModal] = useRecoilState<any>(composeModal)
-  const handleChangeTab = (filterCode: number) => {
-    setFilter(filterCode);
+  const [filter, setFilter] = useRecoilState(mockFilter);
+  // const [_ , setShowComposeModal] = useRecoilState<any>(composeModal)
+  const handleChangeTab = (filterCode: string) => {
+      setFilter(filterCode)
   };
 
   return (
@@ -15,32 +13,32 @@ export default function Header() {
       <span>Filter By :</span>
       <section className="header-section-nav" style={{fontSize : "14px" , fontWeight : "semibold"}}>
         <span
-          onClick={() => handleChangeTab(0)}
+          onClick={() => handleChangeTab("unread")}
           style={
-            filter === 0 ? { backgroundColor: "#E5E7EB", color: "#1F2937" } : {}
+            filter === "unread" ? { backgroundColor: "#E5E7EB", color: "#1F2937" } : {}
           }
         >
-          {filter_map[0].toString()}
+          Unread
         </span>
         <span
-          onClick={() => handleChangeTab(1)}
+          onClick={() => handleChangeTab("read")}
           style={
-            filter === 1 ? { backgroundColor: "#E5E7EB", color: "#1F2937" } : {}
+            filter === "read" ? { backgroundColor: "#E5E7EB", color: "#1F2937" } : {}
           }
         >
-          {filter_map[1].toString()}
+          Read
         </span>
         <span
           onClick={() => {
-              setShowComposeModal(true)
-              handleChangeTab(2)
+
+              handleChangeTab("favorite")
             }
           }
           style={
-            filter === 2 ? { backgroundColor: "#E5E7EB", color: "#1F2937" } : {}
+            filter === "favorite" ? { backgroundColor: "#E5E7EB", color: "#1F2937" } : {}
           }
         >
-          send
+          Favorites
         </span>
       </section>
     </header>

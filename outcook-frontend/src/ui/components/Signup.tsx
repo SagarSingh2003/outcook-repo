@@ -113,11 +113,15 @@ const SignupPage = () => {
               </button>
 
               <div className="divider">
-                <span>OR CONTINUE WITH</span>
+                <span>OR CONTINUE WITHOUT AUTHENTICATION </span>
               </div>
 
-              <button type="button" className="github-btn">
-                GitHub
+              <button type="button" className="github-btn" 
+                onClick={() => {
+                    window.location.href = "/messages"
+                }}
+              >
+                MOCK API MESSAGES SECTION
               </button>
 
               <p className="terms">
