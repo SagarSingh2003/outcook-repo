@@ -44,7 +44,7 @@ export default function Home(){
             ws.addEventListener('message' , (msg : any) => {
                 const message = JSON.parse(JSON.parse(msg?.data))
                 console.log(message , "maasage");
-                setAllMessages(state => state.concat([noti_fication] as any))
+                setAllMessages(state => state.concat([message] as any))
                 setNotification((state : any) => state.concat([message]))
                 showToast({title: "🔔" + message.subject , desc : (message)?.short_description})
                 console.log(message , "message recieved");
