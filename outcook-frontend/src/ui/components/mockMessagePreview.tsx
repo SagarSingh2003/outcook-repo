@@ -1,5 +1,5 @@
 import { backButtonPressed } from "@/atoms/backButton";
-import { currSessionReadMsg, readMsgList } from "@/atoms/currSessionReadMsg";
+import { currSessionReadMsg } from "@/atoms/currSessionReadMsg";
 import { IsMessageBodyOpen } from "@/atoms/isMessageBodyOpen";
 import { bodyMetaData } from "@/atoms/messageBody";
 import formatDate from "@/utils/formatDate";
