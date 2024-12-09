@@ -12,7 +12,7 @@ const MockMessagePreviewCards = ({
   isFavorite,
 }: {
   messageItem: IMSG_DATA;
-  isFavorite: boolean;
+  isFavorite: boolean; 
 }) => {
   // const messageItem = {
   //   id: "1",
@@ -27,12 +27,10 @@ const MockMessagePreviewCards = ({
   // };
 
   const [_ , setCurrSessionReadMsg] = useRecoilState(currSessionReadMsg);
-  const notiStyle = { width : "10px" , height: "10px" , backgroundColor: "#f6ca17" , borderRadius : "100%" , display : "flex" , justifyContent: "center" , alignItems : "center"}
   console.log(isFavorite);
   const setBodyMetaData = useSetRecoilState(bodyMetaData);
   const back_Button_Pressed = useRecoilValue(backButtonPressed);
   const setOpenMsgBody = useSetRecoilState(IsMessageBodyOpen);
-  const read_Msg_List = useRecoilValue(readMsgList);
 
   const openMessageBody = (_id: string , data : any) => {
     console.log("saving meta data" , data)
