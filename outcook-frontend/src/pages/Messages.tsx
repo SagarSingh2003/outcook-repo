@@ -1,9 +1,9 @@
+import { getPaginatedMessageList } from "@/atoms/emailMockData";
 import { IsMessageBodyOpen } from "@/atoms/isMessageBodyOpen";
 import { getMessageBody, messageBody } from "@/atoms/messageBody";
-import { getMessageList } from "@/atoms/realEmailData";
 import Footer from "@/ui/components/Footer";
 import Header from "@/ui/components/Header";
-import MessagePreviewCards from "@/ui/components/messagePreviewCard";
+import MockMessagePreviewCards from "@/ui/components/mockMessagePreview";
 import MsgBody from "@/ui/components/MsgBody";
 import { get_Message_Body, IMSG_DATA } from "@/utils/getMockMessages";
 import { useEffect } from "react";
@@ -11,7 +11,7 @@ import { useRecoilValue , useSetRecoilState } from "recoil";
 
 export default function Home(){
 
-    let messageList = useRecoilValue(getMessageList);
+    let messageList = useRecoilValue(getPaginatedMessageList);
     const isMsgBodyOpen = useRecoilValue(IsMessageBodyOpen);
     const setMessageBody = useSetRecoilState(messageBody);
     const msgBodyWithMetaData = useRecoilValue(getMessageBody);
@@ -42,7 +42,7 @@ export default function Home(){
                 <div style={{width: "25%" }} className="overflow">
                     {messageList?.map((messagePreview : IMSG_DATA) => {
                         return (
-                            <MessagePreviewCards messageItem={messagePreview} isFavorite={true}/>
+                            <MockMessagePreviewCards messageItem={messagePreview} isFavorite={true}/>
                         )
                     })}
 

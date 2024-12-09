@@ -7,7 +7,7 @@ import { IMSG_DATA } from "@/utils/getMockMessages";
 import { markAsRead } from "@/utils/markAsRead";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 
-const MessagePreviewCards = ({
+const MockMessagePreviewCards = ({
   messageItem,
   isFavorite,
 }: {
@@ -89,12 +89,6 @@ console.log(messageItem , "message item");
           <span className="color-fade">
             {formatDate(messageItem?.date).toString()} &nbsp;
           </span>
-          {/* @ts-expect-error */}
-          <div        style={ !read_Msg_List.includes(messageItem?._id) ? notiStyle :   {display : "none"}}>
-                <div style={{ width : "5px" , height: "5px" , backgroundColor: "#e1b038" , borderRadius : "100%"}}>
-
-                </div>
-          </div>
         </section>
       </div>
     </section>
@@ -115,4 +109,4 @@ console.log(messageItem , "message item");
 //   </svg>
 // );
 
-export default MessagePreviewCards;
+export default MockMessagePreviewCards;
